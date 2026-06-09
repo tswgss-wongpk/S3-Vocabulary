@@ -1,0 +1,685 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S3 Vocab Adventure: Hong Kong Community Hero</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Poppins & Fredoka for playful style -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+        }
+        .playful-title {
+            font-family: 'Fredoka', sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 4px solid #333;
+            box-shadow: 8px 8px 0px #333;
+        }
+        .btn-playful {
+            border: 3px solid #333;
+            box-shadow: 4px 4px 0px #333;
+            transition: all 0.1s ease;
+        }
+        .btn-playful:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px #333;
+        }
+        .btn-choice {
+            border: 2px solid #e2e8f0;
+            transition: all 0.2s ease;
+        }
+        .btn-choice:hover {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+            transform: translateY(-2px);
+        }
+        .btn-choice.correct {
+            border-color: #10b981;
+            background-color: #ecfdf5;
+            color: #065f46;
+            font-weight: bold;
+        }
+        .btn-choice.wrong {
+            border-color: #ef4444;
+            background-color: #fef2f2;
+            color: #991b1b;
+        }
+        /* Custom progress bar animations */
+        .progress-bar-fill {
+            transition: width 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between p-4 md:p-6 text-slate-800">
+
+    <!-- Top Navigation / Status Bar -->
+    <header class="max-w-4xl w-full mx-auto flex justify-between items-center bg-white p-4 rounded-2xl border-4 border-slate-800 shadow-[4px_4px_0px_rgba(0,0,0,1)] mb-6">
+        <div class="flex items-center gap-2">
+            <span class="text-3xl">🎒</span>
+            <div>
+                <h1 class="playful-title text-xl md:text-2xl font-black text-slate-800 tracking-wide">HK Community Hero</h1>
+                <p class="text-xs text-slate-500 font-semibold">S3 Vocabulary Challenge</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <!-- Score & Lives -->
+            <div class="flex items-center gap-3 bg-amber-100 px-3 py-1.5 rounded-xl border-2 border-slate-800">
+                <span class="text-lg">⭐</span>
+                <span id="global-score" class="font-bold text-slate-800">0</span>
+            </div>
+            <div class="flex items-center gap-1 bg-rose-100 px-3 py-1.5 rounded-xl border-2 border-slate-800">
+                <span class="text-rose-500">❤️</span>
+                <span id="lives-count" class="font-bold text-slate-800">3</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Game Container -->
+    <main class="max-w-4xl w-full mx-auto flex-grow flex flex-col justify-center my-4">
+        
+        <!-- START SCREEN -->
+        <section id="screen-start" class="glass-card rounded-3xl p-6 md:p-10 text-center flex flex-col items-center gap-6">
+            <div class="w-24 h-24 bg-amber-400 rounded-full flex items-center justify-center text-5xl border-4 border-slate-800 animate-bounce">
+                🦁
+            </div>
+            <h2 class="playful-title text-3xl md:text-5xl font-black text-indigo-600">Become a HK Community Hero!</h2>
+            <p class="text-slate-600 max-w-lg text-sm md:text-base leading-relaxed">
+                Welcome, Secondary 3 students! Many grassroots families in Hong Kong are facing various social issues. Use your English power to solve community problems and help them out!
+            </p>
+            
+            <div class="bg-indigo-50 p-4 rounded-2xl border-2 border-dashed border-indigo-300 w-full max-w-md text-left">
+                <h3 class="font-bold text-indigo-800 mb-2 flex items-center gap-2">
+                    <i data-lucide="book-open" class="w-5 h-5"></i> Today's S3 Target Vocabularies:
+                </h3>
+                <div class="grid grid-cols-2 gap-2 text-xs md:text-sm font-semibold text-slate-700">
+                    <span class="bg-white p-1 rounded border">🔑 poverty</span>
+                    <span class="bg-white p-1 rounded border">🔑 subdivided</span>
+                    <span class="bg-white p-1 rounded border">🔑 alleviate</span>
+                    <span class="bg-white p-1 rounded border">🔑 despite</span>
+                    <span class="bg-white p-1 rounded border">🔑 low-paid jobs</span>
+                    <span class="bg-white p-1 rounded border">🔑 afford</span>
+                    <span class="bg-white p-1 rounded border">🔑 nutritious food</span>
+                    <span class="bg-white p-1 rounded border">🔑 free tutorial classes</span>
+                    <span class="bg-white p-1 rounded border">🔑 higher education</span>
+                    <span class="bg-white p-1 rounded border">🔑 make efforts</span>
+                    <span class="bg-white p-1 rounded border">🔑 scale</span>
+                    <span class="bg-white p-1 rounded border">🔑 crime</span>
+                </div>
+            </div>
+
+            <button onclick="startGame()" class="btn-playful w-full max-w-sm bg-emerald-400 hover:bg-emerald-300 text-slate-900 font-extrabold text-xl py-4 rounded-2xl flex justify-center items-center gap-2">
+                <span>START MISSION!</span>
+                <i data-lucide="play-circle"></i>
+            </button>
+        </section>
+
+        <!-- MAP / MISSION SELECT SCREEN -->
+        <section id="screen-map" class="hidden glass-card rounded-3xl p-6 md:p-8 flex flex-col gap-6">
+            <h2 class="playful-title text-2xl md:text-3xl font-black text-center text-slate-800">Your Mission Map 🗺️</h2>
+            <p class="text-center text-slate-500 text-sm">Clear all three community zones to win the legendary "Community Hero Certificate"!</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-4">
+                <!-- Zone 1 -->
+                <div id="card-zone-1" class="border-4 border-slate-800 rounded-2xl p-5 flex flex-col justify-between bg-emerald-100 shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs bg-emerald-400 text-slate-900 font-extrabold px-2.5 py-1 rounded-full border border-slate-800">ZONE 01</span>
+                            <span class="text-xl">🏢</span>
+                        </div>
+                        <h3 class="font-bold text-lg text-slate-800 mb-1">Sham Shui Po Living</h3>
+                        <p class="text-xs text-slate-600">Help a local family living in an extremely small home environment.</p>
+                    </div>
+                    <button onclick="startZone(1)" id="btn-zone-1" class="btn-playful mt-4 bg-emerald-400 hover:bg-emerald-300 font-extrabold text-sm py-2 px-4 rounded-xl text-slate-900">
+                        Enter Zone
+                    </button>
+                </div>
+
+                <!-- Zone 2 -->
+                <div id="card-zone-2" class="border-4 border-slate-800 rounded-2xl p-5 flex flex-col justify-between bg-slate-200 opacity-60 shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs bg-amber-400 text-slate-900 font-extrabold px-2.5 py-1 rounded-full border border-slate-800">ZONE 02</span>
+                            <span class="text-xl">🎓</span>
+                        </div>
+                        <h3 class="font-bold text-lg text-slate-800 mb-1">Education & Dreams</h3>
+                        <p class="text-xs text-slate-600">Assist Leo in his studies despite having very limited resources.</p>
+                    </div>
+                    <button onclick="startZone(2)" id="btn-zone-2" disabled class="btn-playful mt-4 bg-slate-300 font-extrabold text-sm py-2 px-4 rounded-xl text-slate-600 cursor-not-allowed">
+                        🔒 Locked
+                    </button>
+                </div>
+
+                <!-- Zone 3 -->
+                <div id="card-zone-3" class="border-4 border-slate-800 rounded-2xl p-5 flex flex-col justify-between bg-slate-200 opacity-60 shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs bg-indigo-400 text-slate-900 font-extrabold px-2.5 py-1 rounded-full border border-slate-800">ZONE 03</span>
+                            <span class="text-xl">👮</span>
+                        </div>
+                        <h3 class="font-bold text-lg text-slate-800 mb-1">Bright Future</h3>
+                        <p class="text-xs text-slate-600">Join hands to support community youth and keep the neighborhood safe.</p>
+                    </div>
+                    <button onclick="startZone(3)" id="btn-zone-3" disabled class="btn-playful mt-4 bg-slate-300 font-extrabold text-sm py-2 px-4 rounded-xl text-slate-600 cursor-not-allowed">
+                        🔒 Locked
+                    </button>
+                </div>
+            </div>
+
+            <!-- Total progress -->
+            <div class="bg-indigo-50 p-4 rounded-xl border-2 border-slate-800">
+                <div class="flex justify-between text-xs font-bold text-indigo-800 mb-1">
+                    <span>Overall Progress</span>
+                    <span id="overall-progress-text">0% Completed</span>
+                </div>
+                <div class="w-full bg-indigo-200 rounded-full h-4 border-2 border-slate-800 overflow-hidden">
+                    <div id="overall-progress-bar" class="bg-indigo-500 h-full progress-bar-fill" style="width: 0%"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GAMEPLAY / QUIZ SCREEN -->
+        <section id="screen-gameplay" class="hidden glass-card rounded-3xl p-6 md:p-8 flex flex-col gap-6">
+            <!-- Zone Header -->
+            <div class="flex justify-between items-center border-b-4 border-slate-800 pb-4">
+                <div>
+                    <span id="game-zone-tag" class="text-xs bg-indigo-400 text-slate-900 font-black px-2.5 py-1 rounded-full border-2 border-slate-800">ZONE X</span>
+                    <h2 id="game-zone-title" class="playful-title text-xl md:text-2xl font-black mt-1">Zone Title</h2>
+                </div>
+                <!-- Question indicator within zone -->
+                <div class="text-right">
+                    <span class="text-xs text-slate-500 font-bold">Progress</span>
+                    <div id="zone-indicators" class="flex gap-1.5 mt-1">
+                        <!-- Filled dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Paragraph Reading Card with Highlighted / Blank area -->
+            <div class="bg-amber-50 rounded-2xl border-4 border-slate-800 p-5 shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="text-sm font-bold bg-amber-200 text-amber-800 px-3 py-1 rounded-lg border border-amber-400">Context Reading</span>
+                </div>
+                <p id="game-context-paragraph" class="text-slate-700 text-sm md:text-base leading-relaxed font-medium">
+                    <!-- Text with gap/highlight -->
+                </p>
+            </div>
+
+            <!-- Interactive Quiz Section -->
+            <div class="flex flex-col gap-4">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-bold text-slate-800 text-sm md:text-base flex items-center gap-2">
+                        <span>🤔 Choose the correct vocabulary item:</span>
+                    </h3>
+                    <span class="text-xs bg-indigo-100 text-indigo-700 font-bold px-2 py-0.5 rounded border border-indigo-200">Medium Difficulty</span>
+                </div>
+
+                <!-- Choices Grid -->
+                <div id="choices-grid" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <!-- Generated dynamically -->
+                </div>
+            </div>
+
+            <!-- Feedback Card (Initially Hidden) -->
+            <div id="feedback-card" class="hidden rounded-2xl border-4 border-slate-800 p-4 flex items-start gap-4 transition-all duration-300">
+                <span id="feedback-emoji" class="text-3xl">🎉</span>
+                <div class="flex-grow">
+                    <h4 id="feedback-title" class="font-bold text-lg">Correct!</h4>
+                    <p id="feedback-text" class="text-sm mt-1"></p>
+                </div>
+                <button onclick="nextStep()" id="btn-next" class="btn-playful bg-slate-900 hover:bg-slate-800 text-white font-extrabold px-6 py-2.5 rounded-xl text-sm flex items-center gap-1">
+                    <span>Next</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- GAME OVER SCREEN (Out of Lives) -->
+        <section id="screen-game-over" class="hidden glass-card rounded-3xl p-6 md:p-10 text-center flex flex-col items-center gap-6">
+            <div class="w-24 h-24 bg-rose-400 rounded-full flex items-center justify-center text-5xl border-4 border-slate-800 animate-pulse">
+                💔
+            </div>
+            <h2 class="playful-title text-3xl md:text-5xl font-black text-rose-600">Mission Failed...</h2>
+            <p class="text-slate-600 max-w-lg text-sm md:text-base leading-relaxed">
+                Oh no! You ran out of hearts while exploring the community. Don't worry, even heroes need practice. Try again to learn these essential S3 vocabularies!
+            </p>
+            
+            <button onclick="restartGame()" class="btn-playful w-full max-w-sm bg-rose-400 hover:bg-rose-300 text-slate-900 font-extrabold text-xl py-4 rounded-2xl flex justify-center items-center gap-2">
+                <i data-lucide="rotate-ccw"></i>
+                <span>TRY AGAIN</span>
+            </button>
+        </section>
+
+        <!-- VICTORY SCREEN (Completed all zones) -->
+        <section id="screen-victory" class="hidden glass-card rounded-3xl p-6 md:p-10 text-center flex flex-col items-center gap-6">
+            <div class="w-24 h-24 bg-amber-400 rounded-full flex items-center justify-center text-5xl border-4 border-slate-800">
+                🏆
+            </div>
+            <h2 class="playful-title text-3xl md:text-5xl font-black text-yellow-500">CONGRATULATIONS!</h2>
+            <p class="text-slate-700 font-bold text-lg md:text-xl">You are a certified S3 Community Hero!</p>
+            <p class="text-slate-500 max-w-lg text-xs md:text-sm">
+                You successfully solved the problems of Sham Shui Po, education gaps, and neighborhood safety using all 12 target English words!
+            </p>
+
+            <!-- Certificate Frame -->
+            <div class="border-8 border-amber-300 p-6 bg-amber-50 rounded-2xl max-w-lg w-full text-center relative border-dashed">
+                <div class="absolute top-2 left-2 text-xl">🎓</div>
+                <div class="absolute top-2 right-2 text-xl">✨</div>
+                <span class="text-xs uppercase tracking-widest font-bold text-amber-600">Official Achievement</span>
+                <h3 class="playful-title text-2xl font-black text-slate-800 my-2">S3 English Vocabulary Hero</h3>
+                <p class="text-xs text-slate-600">This certificate is awarded to the student who mastered the social topics and vocabulary of Secondary 3.</p>
+                <div class="my-4 border-b border-dashed border-amber-300"></div>
+                <div class="flex justify-around items-center text-xs">
+                    <div>
+                        <p class="font-bold text-slate-500">Final Score</p>
+                        <p id="victory-score" class="font-extrabold text-lg text-slate-800">1200 pts</p>
+                    </div>
+                    <div>
+                        <p class="font-bold text-slate-500">Lives Left</p>
+                        <p id="victory-lives" class="font-extrabold text-lg text-rose-500">❤❤❤</p>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="restartGame()" class="btn-playful w-full max-w-sm bg-emerald-400 hover:bg-emerald-300 text-slate-900 font-extrabold text-lg py-3 rounded-2xl flex justify-center items-center gap-2">
+                <i data-lucide="rotate-ccw"></i>
+                <span>Play Again / Review Vocab</span>
+            </button>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center mt-6 text-xs text-slate-700 font-semibold max-w-4xl mx-auto w-full bg-white/70 py-2.5 rounded-xl border border-slate-300">
+        Designed for S3 Secondary Students in Hong Kong • Target Vocab: 12 Core Words.
+    </footer>
+
+    <!-- Game Scripts -->
+    <script>
+        // Game State
+        let state = {
+            score: 0,
+            lives: 3,
+            currentZone: 0,
+            currentQuestionIndex: 0, // 0-3 for each zone
+            completedZones: [false, false, false], // track complete status
+            activeAnswers: [] // Stores standard/scrambled options
+        };
+
+        // Vocabulary Data & Story Paragraphs (Hong Kong localized contexts)
+        const zoneData = {
+            1: {
+                title: "Sham Shui Po Living Conditions",
+                tagColor: "bg-emerald-400",
+                questions: [
+                    {
+                        word: "poverty",
+                        contextBefore: "In Hong Kong, many low-income families are living below the line of ",
+                        contextAfter: ", struggling to meet their daily basic requirements.",
+                        choices: ["poverty", "crime", "higher education", "scale"],
+                        definition: "The state of being extremely poor. (貧窮)",
+                        example: "Living in poverty makes it difficult to afford basic necessities like fresh food."
+                    },
+                    {
+                        word: "subdivided",
+                        contextBefore: "Due to high rents, hundreds of thousands of people are forced to live in tiny, crowded ",
+                        contextAfter: " flats in areas like Sham Shui Po, where the space is smaller than a single parking slot.",
+                        choices: ["subdivided", "nutritious food", "alleviate", "make efforts"],
+                        definition: "Divided into smaller parts. (劏房/細分的)",
+                        example: "Subdivided flats usually have poor safety standards and limited ventilation."
+                    },
+                    {
+                        word: "afford",
+                        contextBefore: "Parents work extremely long hours but still find it difficult to ",
+                        contextAfter: " the sky-high rents, leaving them with very little money left for other expenses.",
+                        choices: ["afford", "despite", "scale", "free tutorial classes"],
+                        definition: "Have enough money to pay for something. (負擔得起)",
+                        example: "We cannot afford to rent a bigger flat right now."
+                    },
+                    {
+                        word: "nutritious food",
+                        contextBefore: "To save money, these families often buy instant noodles instead of fresh and ",
+                        contextAfter: " for their growing children, which may harm their health.",
+                        choices: ["nutritious food", "low-paid jobs", "crime", "alleviate"],
+                        definition: "Food that contains substances needed for health and growth. (營養食物)",
+                        example: "Eating nutritious food helps teenagers concentrate better during secondary school classes."
+                    }
+                ]
+            },
+            2: {
+                title: "Education & Hope for the Future",
+                tagColor: "bg-amber-400",
+                questions: [
+                    {
+                        word: "despite",
+                        contextBefore: "Leo is a secondary student who tries his best to study hard, ",
+                        contextAfter: " having to do his homework on a small foldable table next to his bed.",
+                        choices: ["despite", "afford", "poverty", "scale"],
+                        definition: "Without being affected by; in spite of. (儘管/雖然)",
+                        example: "Despite the loud noise in the neighborhood, Leo managed to pass his DSE exams with high marks."
+                    },
+                    {
+                        word: "low-paid jobs",
+                        contextBefore: "Leo's parents only have low-skilled and ",
+                        contextAfter: ", meaning their income is unstable and they cannot hire private tutors for him.",
+                        choices: ["low-paid jobs", "free tutorial classes", "subdivided", "make efforts"],
+                        definition: "Work that pays very little money. (低薪工作)",
+                        example: "Many workers in low-paid jobs find it hard to climb up the social ladder."
+                    },
+                    {
+                        word: "free tutorial classes",
+                        contextBefore: "Thankfully, a local non-profit organization (NGO) provides ",
+                        contextAfter: " for underprivileged students to help them with their school subjects after class.",
+                        choices: ["free tutorial classes", "higher education", "alleviate", "despite"],
+                        definition: "Extra academic support given to students without any cost. (免費補習班)",
+                        example: "NGOs hire volunteer university students to teach free tutorial classes."
+                    },
+                    {
+                        word: "higher education",
+                        contextBefore: "Leo hopes that through hard work, he can enter university and pursue ",
+                        contextAfter: ", which is his ultimate goal to change his family's destiny.",
+                        choices: ["higher education", "poverty", "subdivided", "crime"],
+                        definition: "Education at college or university level. (高等教育)",
+                        example: "Higher education opens up many professional career opportunities."
+                    }
+                ]
+            },
+            3: {
+                title: "Community Solutions & Safety",
+                tagColor: "bg-indigo-400",
+                questions: [
+                    {
+                        word: "make efforts",
+                        contextBefore: "Social workers and volunteers in Hong Kong continuously ",
+                        contextAfter: " to distribute food and organize warm community events for elderly residents.",
+                        choices: ["make efforts", "alleviate", "afford", "low-paid jobs"],
+                        definition: "Try hard to achieve or do something. (付出努力)",
+                        example: "If we all make efforts to help, our community will become a warmer place."
+                    },
+                    {
+                        word: "alleviate",
+                        contextBefore: "These community food banks help to ",
+                        contextAfter: " the financial burden on the low-income families by giving them free rice and vegetables.",
+                        choices: ["alleviate", "poverty", "despite", "scale"],
+                        definition: "Make suffering or a problem less severe. (緩解/減輕)",
+                        example: "The new community center was built to alleviate the loneliness of single elders."
+                    },
+                    {
+                        word: "scale",
+                        contextBefore: "Although these problems are huge, even doing something on a small ",
+                        contextAfter: ", like helping your neighbor, can make a positive impact.",
+                        choices: ["scale", "free tutorial classes", "nutritious food", "subdivided"],
+                        definition: "The size or level of something. (規模/範圍)",
+                        example: "The government launched a large-scale project to build transitional housing."
+                    },
+                    {
+                        word: "crime",
+                        contextBefore: "By providing sports clubs and mentoring programs for teenagers, we can prevent youth ",
+                        contextAfter: " and keep our neighborhoods safe and clean.",
+                        choices: ["crime", "higher education", "afford", "make efforts"],
+                        definition: "Illegal activities or actions. (犯罪)",
+                        example: "Idle youths are easily influenced to commit crime if they have no guidance."
+                    }
+                ]
+            }
+        };
+
+        // Initialize UI Elements
+        function initApp() {
+            lucide.createIcons();
+            updateHeaderUI();
+        }
+
+        // Start from Title Screen to Map Screen
+        function startGame() {
+            showScreen("screen-map");
+            updateMapUI();
+        }
+
+        // Switch Screen helper
+        function showScreen(screenId) {
+            const screens = ["screen-start", "screen-map", "screen-gameplay", "screen-game-over", "screen-victory"];
+            screens.forEach(id => {
+                const element = document.getElementById(id);
+                if (id === screenId) {
+                    element.classList.remove("hidden");
+                } else {
+                    element.classList.add("hidden");
+                }
+            });
+        }
+
+        // Update Header Status (Score, Lives)
+        function updateHeaderUI() {
+            document.getElementById("global-score").textContent = state.score;
+            document.getElementById("lives-count").textContent = state.lives;
+        }
+
+        // Update the Map Grid UI & Overall Progress
+        function updateMapUI() {
+            // Calculate total progress
+            let completedCount = state.completedZones.filter(Boolean).length;
+            let progressPercent = Math.round((completedCount / 3) * 100);
+            
+            document.getElementById("overall-progress-text").textContent = `${progressPercent}% Completed`;
+            document.getElementById("overall-progress-bar").style.width = `${progressPercent}%`;
+
+            // Setup zones
+            // Zone 1 is always unlocked
+            // Zone 2 unlocks after Zone 1 completed
+            // Zone 3 unlocks after Zone 2 completed
+
+            // Zone 1 Style
+            const z1 = document.getElementById("card-zone-1");
+            const b1 = document.getElementById("btn-zone-1");
+            if (state.completedZones[0]) {
+                z1.className = "border-4 border-slate-800 rounded-2xl p-5 flex flex-col justify-between bg-emerald-200 shadow-[4px_4px_0px_rgba(0,0,0,1)]";
+                b1.innerHTML = "✅ Replay Zone";
+                b1.className = "btn-playful mt-4 bg-emerald-400 hover:bg-emerald-300 font-extrabold text-sm py-2 px-4 rounded-xl text-slate-900";
+            }
+
+            // Zone 2 Style
+            const z2 = document.getElementById("card-zone-2");
+            const b2 = document.getElementById("btn-zone-2");
+            if (state.completedZones[0]) {
+                z2.className = "border-4 border-slate-800 rounded-2xl p-5 flex flex-col justify-between bg-amber-100 shadow-[4px_4px_0px_rgba(0,0,0,1)]";
+                b2.disabled = false;
+                b2.innerHTML = state.completedZones[1] ? "✅ Replay Zone" : "Enter Zone";
+                b2.className = "btn-playful mt-4 bg-amber-400 hover:bg-amber-300 font-extrabold text-sm py-2 px-4 rounded-xl text-slate-900";
+            }
+
+            // Zone 3 Style
+            const z3 = document.getElementById("card-zone-3");
+            const b3 = document.getElementById("btn-zone-3");
+            if (state.completedZones[1]) {
+                z3.className = "border-4 border-slate-800 rounded-2xl p-5 flex flex-col justify-between bg-indigo-100 shadow-[4px_4px_0px_rgba(0,0,0,1)]";
+                b3.disabled = false;
+                b3.innerHTML = state.completedZones[2] ? "✅ Replay Zone" : "Enter Zone";
+                b3.className = "btn-playful mt-4 bg-indigo-400 hover:bg-indigo-300 font-extrabold text-sm py-2 px-4 rounded-xl text-slate-900";
+            }
+        }
+
+        // Start Gameplay of a specific zone
+        function startZone(zoneNum) {
+            state.currentZone = zoneNum;
+            state.currentQuestionIndex = 0;
+            
+            showScreen("screen-gameplay");
+            loadQuestion();
+        }
+
+        // Load Quiz Question for Current Zone
+        function loadQuestion() {
+            const currentZoneData = zoneData[state.currentZone];
+            const question = currentZoneData.questions[state.currentQuestionIndex];
+
+            // Update Titles
+            const tag = document.getElementById("game-zone-tag");
+            tag.className = `text-xs ${currentZoneData.tagColor} text-slate-900 font-black px-2.5 py-1 rounded-full border-2 border-slate-800`;
+            tag.textContent = `ZONE 0${state.currentZone}`;
+            document.getElementById("game-zone-title").textContent = currentZoneData.title;
+
+            // Generate Progress Indicators
+            const indicatorsContainer = document.getElementById("zone-indicators");
+            indicatorsContainer.innerHTML = "";
+            for (let i = 0; i < 4; i++) {
+                const ind = document.createElement("div");
+                ind.className = `w-4 h-4 rounded-full border-2 border-slate-800 ${i < state.currentQuestionIndex ? 'bg-indigo-500' : (i === state.currentQuestionIndex ? 'bg-amber-300 animate-pulse' : 'bg-white')}`;
+                indicatorsContainer.appendChild(ind);
+            }
+
+            // Set Paragraph Context (with blank space)
+            const gapWord = `<span class="bg-indigo-100 text-indigo-700 px-3 py-1 mx-1 rounded border-2 border-dashed border-indigo-400 font-bold font-mono">_______ (${state.currentQuestionIndex + 1})</span>`;
+            document.getElementById("game-context-paragraph").innerHTML = 
+                `"${question.contextBefore}${gapWord}${question.contextAfter}"`;
+
+            // Reset Choice UI
+            const choicesContainer = document.getElementById("choices-grid");
+            choicesContainer.innerHTML = "";
+            
+            // Randomly shuffle choices to make it exciting
+            const shuffledChoices = [...question.choices].sort(() => Math.random() - 0.5);
+
+            shuffledChoices.forEach(choice => {
+                const btn = document.createElement("button");
+                btn.className = "btn-choice text-left p-3.5 rounded-xl font-bold text-slate-700 flex items-center justify-between text-sm md:text-base";
+                btn.innerHTML = `
+                    <span>${choice}</span>
+                    <span class="text-xs font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-500 hover:text-indigo-600">Select</span>
+                `;
+                btn.onclick = () => selectChoice(btn, choice, question.word);
+                choicesContainer.appendChild(btn);
+            });
+
+            // Hide feedback
+            document.getElementById("feedback-card").classList.add("hidden");
+        }
+
+        // Selection Action & Logic
+        function selectChoice(buttonElement, chosenWord, correctWord) {
+            const buttons = document.querySelectorAll("#choices-grid button");
+            // Disable all buttons to prevent multiple clicks
+            buttons.forEach(btn => btn.removeAttribute("onclick"));
+
+            const feedbackCard = document.getElementById("feedback-card");
+            feedbackCard.classList.remove("hidden");
+
+            const currentQuestion = zoneData[state.currentZone].questions[state.currentQuestionIndex];
+
+            if (chosenWord === correctWord) {
+                // Correct Answer
+                buttonElement.className = "btn-choice text-left p-3.5 rounded-xl font-bold text-slate-700 flex items-center justify-between text-sm md:text-base correct";
+                buttonElement.querySelector("span:last-child").textContent = "Correct! 🎉";
+                
+                // Add score
+                state.score += 100;
+                updateHeaderUI();
+
+                // Setup feedback card
+                feedbackCard.className = "rounded-2xl border-4 border-emerald-500 bg-emerald-50 p-4 flex items-start gap-4 transition-all duration-300";
+                document.getElementById("feedback-emoji").textContent = "🏆";
+                document.getElementById("feedback-title").textContent = "Correct Answer! (+100 XP)";
+                document.getElementById("feedback-title").className = "font-bold text-lg text-emerald-800";
+                document.getElementById("feedback-text").innerHTML = `
+                    <strong class="text-slate-800">${correctWord}</strong>: ${currentQuestion.definition}<br>
+                    <span class="text-xs text-slate-500 italic mt-1 block">Example: ${currentQuestion.example}</span>
+                `;
+            } else {
+                // Wrong Answer
+                buttonElement.className = "btn-choice text-left p-3.5 rounded-xl font-bold text-slate-700 flex items-center justify-between text-sm md:text-base wrong";
+                buttonElement.querySelector("span:last-child").textContent = "Incorrect ❌";
+
+                // Highlight correct button
+                buttons.forEach(btn => {
+                    const textSpan = btn.querySelector("span:first-child");
+                    if (textSpan.textContent.trim() === correctWord) {
+                        btn.className = "btn-choice text-left p-3.5 rounded-xl font-bold text-slate-700 flex items-center justify-between text-sm md:text-base correct";
+                    }
+                });
+
+                // Deduct Life
+                state.lives--;
+                updateHeaderUI();
+
+                // Check Game Over
+                if (state.lives <= 0) {
+                    feedbackCard.className = "rounded-2xl border-4 border-rose-500 bg-rose-50 p-4 flex items-start gap-4 transition-all duration-300";
+                    document.getElementById("feedback-emoji").textContent = "💔";
+                    document.getElementById("feedback-title").textContent = "Out of lives!";
+                    document.getElementById("feedback-title").className = "font-bold text-lg text-rose-800";
+                    document.getElementById("feedback-text").innerHTML = `
+                        The correct answer was: <strong class="text-slate-800">${correctWord}</strong>.<br>
+                        ${currentQuestion.definition}
+                    `;
+                    document.getElementById("btn-next").innerHTML = `<span>Show Game Over</span>`;
+                    return;
+                }
+
+                // Setup regular incorrect feedback card
+                feedbackCard.className = "rounded-2xl border-4 border-rose-500 bg-rose-50 p-4 flex items-start gap-4 transition-all duration-300";
+                document.getElementById("feedback-emoji").textContent = "💥";
+                document.getElementById("feedback-title").textContent = "Oh No! (-1 Heart)";
+                document.getElementById("feedback-title").className = "font-bold text-lg text-rose-800";
+                document.getElementById("feedback-text").innerHTML = `
+                    The correct answer was: <strong class="text-slate-800">${correctWord}</strong>.<br>
+                    ${currentQuestion.definition}
+                `;
+            }
+        }
+
+        // Go to Next Question or Zone completion
+        function nextStep() {
+            if (state.lives <= 0) {
+                showScreen("screen-game-over");
+                return;
+            }
+
+            state.currentQuestionIndex++;
+            if (state.currentQuestionIndex < 4) {
+                loadQuestion();
+            } else {
+                // Zone completed!
+                state.completedZones[state.currentZone - 1] = true;
+                
+                // Check if all zones are completed
+                if (state.completedZones.every(Boolean)) {
+                    // Win state
+                    document.getElementById("victory-score").textContent = `${state.score} pts`;
+                    document.getElementById("victory-lives").textContent = "❤".repeat(state.lives);
+                    showScreen("screen-victory");
+                } else {
+                    // Back to map with visual progression
+                    showScreen("screen-map");
+                    updateMapUI();
+                }
+            }
+        }
+
+        // Restart overall game State
+        function restartGame() {
+            state.score = 0;
+            state.lives = 3;
+            state.currentZone = 0;
+            state.currentQuestionIndex = 0;
+            state.completedZones = [false, false, false];
+            updateHeaderUI();
+            showScreen("screen-start");
+        }
+
+        // Run On load
+        window.onload = function() {
+            initApp();
+        };
+    </script>
+</body>
+</html>
